@@ -23,6 +23,10 @@ class Run
     protected $isRegistered;
     protected $allowQuit       = true;
     protected $sendOutput      = true;
+
+    /**
+     * @var integer|false
+     */
     protected $sendHttpCode    = 500;
 
     /**
@@ -245,6 +249,10 @@ class Run
             $handler->setInspector($inspector);
             $handler->setException($exception);
 
+            // The HandlerInterface does not require an Exception passed to handle()
+            // and neither of our bundled handlers use it.
+            // However, 3rd party handlers may have already relied on this parameter,
+            // and removing it would be possibly breaking for users.
             $handlerResponse = $handler->handle($exception);
 
             if (in_array($handlerResponse, array(Handler::LAST_HANDLER, Handler::QUIT))) {
@@ -294,7 +302,8 @@ class Run
      * @param string $file
      * @param int    $line
      *
-     * @return bool|null
+     * @return bool
+     * @throws ErrorException
      */
     public function handleError($level, $message, $file = null, $line = null)
     {
@@ -314,7 +323,13 @@ class Run
             } else {
                 $this->handleException($exception);
             }
+            // Do not propagate errors which were already handled by Whoops.
+            return true;
         }
+
+        // Propagate error to the next handler, allows error_get_last() to
+        // work on silenced errors.
+        return false;
     }
 
     /**
