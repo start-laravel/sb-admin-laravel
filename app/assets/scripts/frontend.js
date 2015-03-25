@@ -27,10 +27,13 @@ var lineChartData = {
 }
 
 
-    var cline = document.getElementById("cline").getContext("2d");
-    new Chart(cline).Line(lineChartData, {
-        responsive: true
-    });
+    var cline = document.getElementById("cline");
+    if (cline)
+    {
+        new Chart(cline.getContext("2d")).Line(lineChartData, {
+            responsive: true
+        });
+    }
    
 
    var pdata = [
@@ -53,8 +56,11 @@ var lineChartData = {
         label: "Yellow"
     }
 ]
-var cpie = document.getElementById("cpie").getContext("2d");
-new Chart(cpie).Pie(pdata, { responsive: true});
+var cpie = document.getElementById("cpie");
+if (cpie)
+{
+    new Chart(cpie.getContext("2d")).Pie(pdata, { responsive: true});
+}
 
 var ddata = [
     {
@@ -76,8 +82,11 @@ var ddata = [
         label: "Yellow"
     }
 ]
-var cdonut = document.getElementById("cdonut").getContext("2d");
-new Chart(cdonut).Doughnut(ddata, { responsive: true});
+var cdonut = document.getElementById("cdonut");
+if (cdonut)
+{
+    new Chart(cdonut.getContext("2d")).Doughnut(ddata, { responsive: true});
+}
 
 var bdata = {
         labels : ["January","February","March","April","May","June","July"],
@@ -99,10 +108,12 @@ var bdata = {
         ]
 
     }
-    var cbar = document.getElementById("cbar").getContext("2d");
-    new Chart(cbar).Bar(bdata, {
-            responsive : true
+    var cbar = document.getElementById("cbar");
+    if (cbar) {
+        new Chart(cbar.getContext("2d")).Bar(bdata, {
+            responsive: true
         });
+    }
 
     var podata = [
     {
@@ -138,5 +149,9 @@ var bdata = {
 
 ]
 
-var cpolar = document.getElementById("cpolar").getContext("2d");
-new Chart(cpolar).PolarArea(podata, { responsive: true});
+var cbar = document.getElementById("cbar");
+if (cbar) {
+    new Chart(cbar.getContext("2d")).Bar(bdata, {
+        responsive: true
+    });
+}
